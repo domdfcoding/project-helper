@@ -14,7 +14,7 @@ enable_docs: false
 on_pypi: false
 use_whey: true
 
-#min_coverage: 85
+min_coverage: 60
 pre_commit_exclude: "^project_helper/templates/.*\\.(_py|yml)$"
 
 console_scripts:
