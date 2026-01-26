@@ -1,0 +1,62 @@
+# Configuration for 'repo_helper' (https://github.com/repo-helper/repo_helper)
+---
+modname: 'project-helper'
+copyright_years: "2020-2021"
+author: "Dominic Davis-Foster"
+email: "dominic@davis-foster.co.uk"
+username: 'domdfcoding'
+version: '0.0.0'
+license: 'MIT'
+short_desc: 'Configuration helper for CircuitPython projects.'
+
+enable_conda: false
+enable_docs: false
+on_pypi: false
+use_whey: true
+
+python_deploy_version: 3.8
+#min_coverage: 85
+pre_commit_exclude: "^project_helper/templates/.*\\.(_py|yml)$"
+
+console_scripts:
+ - "project_helper = project_helper.__main__:main"
+ - "project-helper = project_helper.__main__:main"
+
+# Versions to run tests for
+python_versions:
+ - '3.8'
+ - '3.9'
+ - 3.10
+# - 3.11-dev
+
+manifest_additional:
+ - "include project_helper/testing/project_helper_example.yml"
+ - "recursive-include project_helper/templates *"
+ - "include project_helper/project_helper_schema.json"
+
+classifiers:
+ - 'Development Status :: 4 - Beta'
+ - 'Environment :: Console'
+ - 'Intended Audience :: Developers'
+ - 'Topic :: Utilities'
+ - 'Environment :: Console'
+
+#extra_sphinx_extensions:
+# - configconfig.autoconfig
+# - sphinx_click
+# - sphinx_autofixture
+
+intersphinx_mapping:
+ - "'jinja2': ('https://jinja.palletsprojects.com/en/2.11.x/', None)"
+
+yapf_exclude:
+ - "project_helper/templates/.*"
+
+#extras_require:
+#  testing:
+#   - pytest>=6.0.0
+#   - coincidence>=0.2.0
+#   - check_wheel_contents>=0.2.0
+
+keywords:
+ - configuration
