@@ -6,6 +6,7 @@ Functions to create files.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -35,7 +36,7 @@ import jinja2
 from domdf_python_tools.bases import UserList
 
 # this package
-from repo_helper.templates import Environment
+from project_helper.templates import Environment
 
 jinja2.Environment.__module__ = "jinja2"
 
@@ -74,7 +75,7 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 		.. code-block:: python
 
 			def function(
-				repo_path: pathlib.Path,
+				project: pathlib.Path,
 				templates: jinja2.Environment,
 				) -> List[str]: ...
 
@@ -91,9 +92,9 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 		def _decorator(function: Callable) -> Callable:
 			signature = inspect.signature(function)
 
-			if list(signature.parameters.keys()) != ["repo_path", "templates"]:
+			if list(signature.parameters.keys()) != ["project", "templates"]:
 				raise SyntaxError(
-						"The decorated function must take only the following arguments: 'repo_path' and 'templates'"
+						"The decorated function must take only the following arguments: 'project' and 'templates'"
 						)
 
 			self.append((function, exclude_name, exclude_unless_true))

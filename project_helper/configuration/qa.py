@@ -2,10 +2,11 @@
 #
 #  testing.py
 r"""
-:class:`~configconfig.configvar.ConfigVar`\s in the "testing" category.
+:class:`~configconfig.configvar.ConfigVar`\s in the "qa" category.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -38,7 +39,6 @@ __all__ = [
 		"mypy_version",
 		"tox_unmanaged",
 		"yapf_exclude",
-		"enable_pre_commit",
 		"pre_commit_exclude",
 		]
 
@@ -57,7 +57,7 @@ class mypy_deps(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
-	category: str = "testing"
+	category: str = "qa"
 
 
 class mypy_plugins(ConfigVar):  # noqa
@@ -78,7 +78,7 @@ class mypy_plugins(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
-	category: str = "testing"
+	category: str = "qa"
 
 
 class mypy_version(ConfigVar):  # noqa
@@ -95,7 +95,7 @@ class mypy_version(ConfigVar):  # noqa
 	dtype = Union[str, float]
 	rtype = str
 	default = "0.910"
-	category: str = "testing"
+	category: str = "qa"
 
 
 class tox_unmanaged(ConfigVar):  # noqa
@@ -107,13 +107,12 @@ class tox_unmanaged(ConfigVar):  # noqa
 	.. code-block:: yaml
 
 		tox_unmanaged:
-		  - "testenv"
 		  - "flake8"
 	"""
 
 	dtype = List[str]
 	default: List[str] = []
-	category: str = "testing"
+	category: str = "qa"
 
 
 class yapf_exclude(ConfigVar):  # noqa
@@ -130,22 +129,7 @@ class yapf_exclude(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
-
-
-class enable_pre_commit(ConfigVar):  # noqa
-	"""
-	Whether pre-commit should be installed and configured.
-
-	Example:
-
-	.. code-block:: yaml
-
-		enable_pre_commit: True
-	"""
-
-	dtype = bool
-	default = True
-	category: str = "other"
+	category: str = "qa"
 
 
 class pre_commit_exclude(ConfigVar):  # noqa
@@ -159,6 +143,7 @@ class pre_commit_exclude(ConfigVar):  # noqa
 
 	dtype = str
 	default: str = "^$"
+	category: str = "qa"
 
 	@classmethod
 	def validate(cls, raw_config_vars: Optional[Dict[str, Any]] = None) -> Any:  # noqa: D102

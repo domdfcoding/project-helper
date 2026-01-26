@@ -6,6 +6,7 @@ Entry point for running ``project_helper`` from the command line.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -32,13 +33,13 @@ import sys
 from consolekit.utils import import_commands
 
 # this package
-import repo_helper.cli.commands
-from repo_helper.cli import cli
+import project_helper.cli.commands
+from project_helper.cli import cli
 
 __all__ = ["main"]
 
 # Load commands
-import_commands(repo_helper.cli.commands, entry_point="repo_helper.command")
+import_commands(project_helper.cli.commands, entry_point="project_parser.command")
 
 
 def main():  # noqa: D103

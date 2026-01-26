@@ -6,6 +6,7 @@ Configuration for `pre-commit <https://pre-commit.com>`_.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -26,132 +27,23 @@ Configuration for `pre-commit <https://pre-commit.com>`_.
 #
 
 # stdlib
-import functools
 import pathlib
-import posixpath
 import re
 from io import StringIO
 from textwrap import indent
-from typing import Iterable, List, MutableMapping, Union
+from typing import List
 
 # 3rd party
-import attr
 import ruamel.yaml
-from apeye.url import URL
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
-from ruamel.yaml import YAML
-from typing_extensions import Literal, TypedDict
+from repo_helper.files.pre_commit import Repo, make_github_url, yaml_safe_loader
 
 # this package
-from repo_helper.files import management
-from repo_helper.templates import Environment
+from project_helper.files import management
+from project_helper.templates import Environment
 
-__all__ = ["GITHUB_COM", "make_github_url", "Hook", "Repo", "make_pre_commit"]
-
-#: Instance of :class:`apeye.url.URL` that points to the GitHub website.
-GITHUB_COM: URL = URL("https://github.com")
-
-yaml_safe_loader = YAML(typ="safe", pure=True)
-
-
-@functools.lru_cache()
-def make_github_url(username: str, repository: str) -> URL:
-	"""
-	Construct a URL to a GitHub repository from a username and repository name.
-
-	:param username: The username of the GitHub account that owns the repository.
-	:param repository: The name of the repository.
-	"""
-
-	return GITHUB_COM / username / repository
-
-
-class _BaseHook(TypedDict):
-	#: Which hook from the repository to use.
-	id: str  # noqa: A003  # pylint: disable=redefined-builtin
-
-
-class Hook(_BaseHook, total=False):
-	"""
-	Represents a pre-commit hook.
-	"""
-
-	#: Allows the hook to be referenced using an additional id when using pre-commit run <hookid>.
-	alias: str
-
-	#: Override the name of the hook - shown during hook execution.
-	name: str
-
-	#: Override the language version for the hook. See https://pre-commit.com/#overriding-language-version
-	language_version: str
-
-	#: Override the default pattern for files to run on.
-	files: str
-
-	#: File exclude pattern.
-	exclude: str
-
-	#: Override the default file types to run on. See https://pre-commit.com/#filtering-files-with-types.
-	types: List[str]
-
-	#: File types to exclude.
-	exclude_types: List[str]
-
-	#: List of additional parameters to pass to the hook.
-	args: List[str]
-
-	stages: List[Literal["commit", "merge-commit", "push", "prepare-commit-msg", "commit-msg", "manual"]]
-	"""
-	Confines the hook to the commit, merge-commit, push, prepare-commit-msg, commit-msg,
-	post-checkout, or manual stage.
-	See https://pre-commit.com/#confining-hooks-to-run-at-certain-stages.
-	"""
-
-	additional_dependencies: List[str]
-	"""
-	A list of dependencies that will be installed in the environment where this hook gets run.
-	One useful application is to install plugins for hooks such as eslint."""
-
-	#: If :py:obj:`True`, this hook will run even if there are no matching files.
-	always_run: bool
-
-	#: If :py:obj:`True`, forces the output of the hook to be printed even when the hook passes.
-	verbose: bool
-
-	#: If present, the hook output will additionally be written to a file.
-	log_file: str
-
-
-def _hook_converter(hooks: Iterable[Union[str, Hook]]) -> List[Hook]:
-	return [hook if isinstance(hook, dict) else {"id": hook} for hook in hooks]
-
-
-@attr.s
-class Repo:
-	"""
-	Represents a repository providing a pre-commit hooks.
-	"""
-
-	#: The repository url to git clone from.
-	repo: URL = attr.ib(converter=URL)
-
-	#: The revision or tag to clone at.
-	rev: str = attr.ib(converter=str)
-
-	hooks: List[Hook] = attr.ib(converter=_hook_converter)
-
-	def to_dict(self) -> MutableMapping[str, Union[str, List[Hook]]]:
-		"""
-		Returns a dictionary representation of the :class:`~.Repo`.
-		"""
-
-		return {
-				"repo": str(self.repo),
-				"rev": self.rev,
-				"hooks": self.hooks,
-				}
-
+__all__ = ["make_pre_commit"]
 
 pre_commit_hooks = Repo(
 		repo=make_github_url("pre-commit", "pre-commit-hooks"),
@@ -212,8 +104,8 @@ flake2lint = Repo(
 # 		)
 
 
-@management.register("pre-commit", ["enable_pre_commit"])
-def make_pre_commit(repo_path: pathlib.Path, templates: Environment) -> List[str]:
+@management.register("pre-commit")
+def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 	"""
 	Add configuration for ``pre-commit``.
 
@@ -222,15 +114,9 @@ def make_pre_commit(repo_path: pathlib.Path, templates: Environment) -> List[str
 	# See https://pre-commit.com for more information
 	# See https://pre-commit.com/hooks.html for more hooks
 
-	:param repo_path: Path to the repository root.
+	:param project: Path to the project root.
 	:param templates:
 	"""
-
-	docs_dir = templates.globals["docs_dir"]
-	import_name = templates.globals["import_name"]
-	stubs_package = templates.globals["stubs_package"]
-
-	non_source_files = [posixpath.join(docs_dir, "conf"), "__pkginfo__", "setup"]
 
 	domdfcoding_hooks = Repo(
 			repo=make_github_url("domdfcoding", "pre-commit-hooks"),
@@ -239,21 +125,25 @@ def make_pre_commit(repo_path: pathlib.Path, templates: Environment) -> List[str
 					{"id": "requirements-txt-sorter", "args": ["--allow-git"]},
 					{
 							"id": "check-docstring-first",
-							"exclude": fr"^({'|'.join(non_source_files)}|{templates.globals['tests_dir']}/.*)\.py$"
 							},
 					"bind-requirements",
 					]
 			)
 
-	formate_excludes = fr"^({'|'.join([*templates.globals['yapf_exclude'], *non_source_files])})\.(_)?py$"
+	yapf_exclude = templates.globals["yapf_exclude"]
+	if yapf_exclude:
+		formate_excludes = fr"^({'|'.join(yapf_exclude)})\.(_)?py$"
+		formate_hooks = [{"id": "formate", "exclude": formate_excludes}]
+	else:
+		formate_hooks = ["formate"]
 
 	formate = Repo(
 			repo=make_github_url("python-formate", "formate"),
 			rev="v0.4.9",
-			hooks=[{"id": "formate", "exclude": formate_excludes}],
+			hooks=formate_hooks,
 			)
 
-	pre_commit_file = PathPlus(repo_path / ".pre-commit-config.yaml")
+	pre_commit_file = PathPlus(project / ".pre-commit-config.yaml")
 
 	if not pre_commit_file.is_file():
 		pre_commit_file.touch()

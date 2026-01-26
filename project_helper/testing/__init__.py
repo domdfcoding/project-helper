@@ -6,11 +6,10 @@ Helpers for running tests with pytest.
 
 .. extras-require:: testing
 	:pyproject:
-
-.. versionadded:: 2020.11.17
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -36,27 +35,21 @@ import os
 import pathlib
 import secrets
 import sys
-from pathlib import Path
 
 # 3rd party
-import check_wheel_contents.__main__  # type: ignore  # nodep
 import jinja2
 import pytest  # nodep
+import repo_helper
 from apeye.url import URL
-from domdf_python_tools.paths import PathPlus
 from dulwich.config import StackedConfig
+from repo_helper.utils import brace
 from southwark.repo import Repo
 
 # this package
-import repo_helper.utils
-from repo_helper.configuration import get_tox_python_versions
-from repo_helper.files.linting import lint_warn_list
-from repo_helper.templates import Environment, template_dir
-from repo_helper.utils import brace
+from project_helper.templates import Environment, template_dir
 
 __all__ = [
 		"demo_environment",
-		"original_datadir",
 		"temp_repo",
 		"temp_empty_repo",
 		"example_config",
@@ -71,52 +64,29 @@ def demo_environment() -> Environment:
 
 	The environment has the following variables available by default:
 
-	.. code-block:: json
+	.. code-block:: python
 
 		{
+			"author": "Bob & Alice",
+			"email": "bob@example.com",
 			"username": "octocat",
+			"repo_name": "circuitpython_hello_world",
 			"assignee": "octocat",
-			"imgbot_ignore": [],
-			"travis_ubuntu_version": "xenial",
-			"github_ci_requirements": {"Linux": {"pre": [], "post": []}},
-			"travis_additional_requirements": [],
-			"conda_channels": ["conda-forge"],
-			"python_versions": ["3.6", "3.7"],
-			"enable_tests": true,
-			"enable_conda": true,
-			"enable_docs": true,
-			"enable_releases": true,
-			"python_deploy_version": "3.6",
-			"min_py_version": "3.6",
-			"modname": "hello-world",
-			"repo_name": "hello-world",
-			"import_name": "hello_world",
-			"platforms": ["Windows"],
-			"pypi_name": "hello-world",
-			"py_modules": [],
-			"manifest_additional": [],
-			"additional_requirements_files": [],
-			"source_dir": "",
-			"tests_dir": "tests",
-			"additional_setup_args": {},
-			"setup_pre": [],
-			"docs_dir": "doc-source",
-			"sphinx_html_theme": "alabaster",
+			"source_files": ["code.py", "boot.py", "secrets.py"],
 			"additional_ignore": ["foo", "bar", "fuzz"],
-			"join_path": "os.path.join",
-			"pure_python": true,
-			"stubs_package": false,
-			"managed_message": "This file is managed by 'repo_helper'. Don't edit it directly.",
-			"short_desc": "a short description",
-			"on_pypi": true,
-			"docs_fail_on_warning": false,
-			"requires_python": "3.6.1",
-			"third_party_version_matrix": {}
+			"imgbot_ignore": ["**/*.svg"],
+			"exclude_files": [],
+			"on_github": True,
+			"mypy_deps": [],
+			"mypy_plugins": [],
+			"mypy_version": "0.910",
+			"tox_unmanaged": [],
+			"yapf_exclude": [],
+			"pre_commit_exclude": "xenial",
+			"managed_message": "This file is managed by 'project_helper'. Don't edit it directly."
 			}
 
-	plus ``lint_warn_list`` = :py:data:`repo_helper.files.linting.lint_warn_list`.
-
-	Additional options can be set and values changed at the start of with:
+	Additional options can be set and values changed at the start of tests as follows:
 
 	.. code-block:: python
 
@@ -124,70 +94,33 @@ def demo_environment() -> Environment:
 			demo_environment.templates.globals["source_dir"] = "src"
 	"""
 
-	templates = Environment(  # nosec: B701
-		loader=jinja2.FileSystemLoader(str(template_dir)),
-		undefined=jinja2.StrictUndefined,
-		)
-
-	templates.globals.update(
-			dict(
-					username="octocat",
-					assignee="octocat",
-					imgbot_ignore=[],
-					travis_ubuntu_version="xenial",
-					github_ci_requirements={"Linux": {"pre": [], "post": []}},
-					travis_additional_requirements=[],
-					conda_channels=["conda-forge"],
-					python_versions={"3.6": {"experimental": False}, "3.7": {"experimental": False}},
-					enable_tests=True,
-					enable_conda=True,
-					enable_docs=True,
-					enable_releases=True,
-					python_deploy_version="3.6",
-					requires_python="3.6.1",
-					min_py_version="3.6",
-					modname="hello-world",
-					repo_name="hello-world",
-					docs_url="https://hello-world.readthedocs.io/en/latest",
-					import_name="hello_world",
-					platforms=["Windows"],
-					pypi_name="hello-world",
-					lint_warn_list=lint_warn_list,
-					py_modules=[],
-					manifest_additional=[],
-					additional_requirements_files=[],
-					source_dir='',
-					tests_dir="tests",
-					additional_setup_args={},
-					setup_pre=[],
-					docs_dir="doc-source",
-					sphinx_html_theme="alabaster",
-					additional_ignore=["foo", "bar", "fuzz"],
-					join_path=os.path.join,
-					pure_python=True,
-					stubs_package=False,
-					managed_message="This file is managed by 'repo_helper'. Don't edit it directly.",
-					short_desc="a short description",
-					on_pypi=True,
-					docs_fail_on_warning=False,
-					brace=brace,
-					third_party_version_matrix={},
-					gh_actions_versions={
-							"3.6": "py36, mypy",
-							"3.7": "py37, build",
-							},
-					)
+	templates = Environment(
+			loader=jinja2.FileSystemLoader(str(template_dir)),
+			undefined=jinja2.StrictUndefined,
 			)
 
-	templates.globals["tox_py_versions"] = get_tox_python_versions(templates.globals["python_versions"])
+	templates.globals.update({
+			"author": "Bob & Alice",
+			"email": "bob@example.com",
+			"username": "octocat",
+			"repo_name": "circuitpython_hello_world",
+			"assignee": "octocat",
+			"source_files": ["code.py", "boot.py", "secrets.py"],
+			"additional_ignore": ["foo", "bar", "fuzz"],
+			"imgbot_ignore": ["**/*.svg"],
+			"exclude_files": [],
+			"on_github": True,
+			"mypy_deps": [],
+			"mypy_plugins": [],
+			"mypy_version": "0.910",
+			"tox_unmanaged": [],
+			"yapf_exclude": [],
+			"pre_commit_exclude": "xenial",
+			"managed_message": "This file is managed by 'project_helper'. Don't edit it directly.",
+			"brace": brace,
+			})
 
 	return templates
-
-
-@pytest.fixture()
-def original_datadir(request) -> Path:  # noqa: D103
-	# Work around pycharm confusing datadir with test file.
-	return PathPlus(os.path.splitext(request.module.__file__)[0] + '_')
 
 
 FAKE_DATE = datetime.date(2020, 7, 25)

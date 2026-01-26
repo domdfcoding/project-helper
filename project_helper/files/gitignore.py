@@ -6,6 +6,7 @@ Configuration for the ``.gitignore`` file.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -33,8 +34,8 @@ from typing import List
 from domdf_python_tools.paths import PathPlus
 
 # this package
-from repo_helper.files import management
-from repo_helper.templates import Environment
+from project_helper.files import management
+from project_helper.templates import Environment
 
 __all__ = [
 		"ignores",
@@ -227,11 +228,11 @@ ignores.extend((
 
 
 @management.register("gitignore")
-def make_gitignore(repo_path: pathlib.Path, templates: Environment) -> List[str]:
+def make_gitignore(project: pathlib.Path, templates: Environment) -> List[str]:
 	"""
 	Add .gitignore file to the given repository.
 
-	:param repo_path: Path to the repository root.
+	:param project: Path to the project root.
 	:param templates:
 	"""
 
@@ -241,6 +242,6 @@ def make_gitignore(repo_path: pathlib.Path, templates: Environment) -> List[str]
 			*templates.globals["additional_ignore"],
 			]
 
-	PathPlus(repo_path / ".gitignore").write_clean('\n'.join(all_ignores))
+	PathPlus(project / ".gitignore").write_clean('\n'.join(all_ignores))
 
 	return [".gitignore"]

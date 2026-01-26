@@ -27,22 +27,16 @@ r"""
 #
 
 # stdlib
-from typing import List, Union
+from typing import List
 
 # 3rd party
 from configconfig.configvar import ConfigVar
 
-# this package
-from repo_helper.utils import license_lookup
-
 __all__ = [
-		"name",
 		"author",
 		"email",
 		"username",
 		"repo_name",
-		"copyright_years",
-		"license",
 		"assignee",
 		"source_files",
 		]
@@ -128,8 +122,6 @@ class assignee(ConfigVar):  # noqa
 
 		username: repo-helper
 		assignee: domdfcoding
-
-	.. versionadded:: 2020.11.23
 	"""
 
 	dtype = str
@@ -137,61 +129,13 @@ class assignee(ConfigVar):  # noqa
 	category: str = "metadata"
 
 
-class copyright_years(ConfigVar):  # noqa
-	"""
-	The copyright_years of the package.
-
-	Examples:
-
-	.. code-block:: yaml
-
-		version: 2020
-
-	or
-
-	.. code-block:: yaml
-
-		version: 2014-2019
-	"""
-
-	dtype = Union[str, int]
-	rtype = str
-	required = True
-	category: str = "metadata"
-
-
-class license(ConfigVar):  # noqa  # pylint: disable=redefined-builtin
-	"""
-	The license for the project.
-
-	Example:
-
-	.. code-block:: yaml
-
-		license: GPLv3+
-
-	Currently understands ``LGPLv3``, ``LGPLv3``, ``GPLv3``, ``GPLv3``, ``GPLv2`` and ``BSD``.
-	"""
-
-	dtype = str
-	required = True
-	category: str = "metadata"
-
-	@classmethod
-	def validator(cls, value):  # noqa: D102
-		value = value.replace(' ', '')
-
-		if value in license_lookup:
-			value = license_lookup[value]
-
-		return value
-
-
 class source_files(ConfigVar):  # noqa
 	"""
-	List of source files belonging to the project, relative to the repository root..
+	List of source files belonging to the project, relative to the project root.
 	"""
 
 	dtype = List[str]
-	default = []
+	default: List[str] = []
 	category: str = "metadata"
+
+	# TODO: Warn if file doesn't exist

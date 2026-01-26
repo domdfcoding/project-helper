@@ -6,6 +6,7 @@ Project Helper: Manage configuration files with ease.
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -28,5 +29,5 @@ Project Helper: Manage configuration files with ease.
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020-2021 Dominic Davis-Foster"
 __license__: str = "MIT"
-__version__: str = "2021.8.11"
+__version__: str = "0.0.0"
 __email__: str = "dominic@davis-foster.co.uk"

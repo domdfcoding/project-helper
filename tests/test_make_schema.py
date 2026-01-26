@@ -7,7 +7,7 @@ from consolekit.testing import CliRunner, Result
 from domdf_python_tools.paths import in_directory
 
 # this package
-from repo_helper.cli.commands.make_schema import make_schema
+from project_helper.cli.commands.make_schema import make_schema
 
 
 def test_make_schema(tmp_pathplus):
@@ -17,10 +17,10 @@ def test_make_schema(tmp_pathplus):
 		result: Result = runner.invoke(make_schema, catch_exceptions=False)
 		assert result.exit_code == 0
 		if os.sep == '/':
-			assert re.match(r"Wrote schema to .*/repo_helper/repo_helper_schema\.json", result.stdout)
+			assert re.match(r"Wrote schema to .*/project_helper/project_helper_schema\.json", result.stdout)
 		elif os.sep == '\\':
 			assert re.match(
-					r"Wrote schema to .*\\repo_helper\\repo_helper_schema\.json",
+					r"Wrote schema to .*\\project_helper\\project_helper_schema\.json",
 					result.stdout.splitlines()[0],
 					)
 		else:

@@ -2,11 +2,11 @@
 #
 #  templates.py
 """
-Contains the :class:`pathlib.Path` objects representing the templates directory (:data:`template_dir`),
-and the directory representing the files used to initialise a new repository (:data:`init_repo_template_dir`).
-"""  # noqa: D400
+Contains the :class:`pathlib.Path` object representing the templates directory (:data:`template_dir`).
+"""
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -33,13 +33,10 @@ from typing import Any, Dict
 import jinja2
 from domdf_python_tools.paths import PathPlus
 
-__all__ = ["template_dir", "init_repo_template_dir"]
+__all__ = ["template_dir"]
 
 #: The templates directory.
 template_dir = PathPlus(__file__).parent.absolute()
-
-#: The directory representing the files used to initialise a new repository
-init_repo_template_dir = (PathPlus(__file__).parent / "init_repo_files").absolute()
 
 
 class Environment(jinja2.Environment):

@@ -9,17 +9,6 @@
       },
       "description": "A list of additional entries for ``.gitignore``."
     },
-    "additional_requirements_files": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of files containing additional requirements."
-    },
-    "additional_setup_args": {
-      "type": "object",
-      "description": "A dictionary of additional keyword arguments for :func:`setuptools.setup()`. The values can refer to variables in ``__pkginfo__.py``. String values must be enclosed in quotes here."
-    },
     "assignee": {
       "type": "string",
       "description": "The username of the GitHub account to assign issues to."
@@ -28,154 +17,16 @@
       "type": "string",
       "description": "The name of the package author."
     },
-    "classifiers": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of `\"trove classifiers\" <https://pypi.org/classifiers/>`_ for PyPI."
-    },
-    "conda_channels": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of Anaconda channels required to build and use the Conda package."
-    },
-    "conda_description": {
-      "type": "string",
-      "description": "A short description of the project for Anaconda."
-    },
-    "conda_extras": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of extras (see :conf:`extras_require`) to include as requirements in the Conda package."
-    },
-    "console_scripts": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of entries for ``console_scripts`` in ``setup.py``. Each entry must follow the same format as required in ``setup.py``."
-    },
-    "copyright_years": {
-      "type": [
-        "string",
-        "number"
-      ],
-      "description": "The copyright_years of the package."
-    },
-    "desktopfile": {
-      "type": "object",
-      "description": "A key value mapping of entries for a Linux ``.desktop`` file."
-    },
-    "docker_name": {
-      "type": "string",
-      "description": "The name of the docker image on dockerhub."
-    },
-    "docker_shields": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether shields for docker container image size and build status should be shown."
-    },
-    "docs_dir": {
-      "type": "string",
-      "description": "The directory containing the docs code of the project."
-    },
-    "docs_fail_on_warning": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether the documentation check on GitHub Actions should fail on warnings."
-    },
-    "docs_url": {
-      "type": "string",
-      "description": "The URL of the documentation, if it uses a custom domain. Default ``https://{repo_name}.readthedocs.io``."
-    },
     "email": {
       "type": "string",
       "description": "The email address of the author or maintainer."
-    },
-    "enable_conda": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether conda packages should be built and deployed."
-    },
-    "enable_devmode": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Enable `Python Development Mode`_ when running tests."
-    },
-    "enable_docs": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether documentation should be built and deployed."
-    },
-    "enable_pre_commit": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether pre-commit should be installed and configured."
-    },
-    "enable_releases": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether packages should be copied from PyPI to GitHub Releases."
-    },
-    "enable_tests": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether tests should be performed with pytest."
-    },
-    "entry_points": {
-      "type": "object",
-      "description": "A mapping of entry point categories to a list of entries for each category."
     },
     "exclude_files": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "A list of files not to manage with `repo_helper`."
-    },
-    "extra_sphinx_extensions": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional extensions to enable for Sphinx."
-    },
-    "extras_require": {
-      "type": "object",
-      "description": "A dictionary of extra requirements, where the keys are the names of the extras and the values are a list of requirements."
-    },
-    "github_ci_requirements": {
-      "type": "object",
-      "description": "Additional steps to run in GitHub actions before and after installing dependencies."
-    },
-    "html_context": {
-      "type": "object",
-      "description": "A dictionary of configuration values for the documentation HTML context."
-    },
-    "html_theme_options": {
-      "type": "object",
-      "description": "A dictionary of configuration values for the documentation HTML theme."
+      "description": "A list of files not to manage with `project_helper`."
     },
     "imgbot_ignore": {
       "type": "array",
@@ -183,46 +34,6 @@
         "type": "string"
       },
       "description": "A list of additional glob ignores for imgbot."
-    },
-    "import_name": {
-      "type": "string",
-      "description": "The name the package is imported with, if different to :conf:`modname`."
-    },
-    "intersphinx_mapping": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional entries for ``intersphinx_mapping`` for Sphinx."
-    },
-    "keywords": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of keywords for the project."
-    },
-    "license": {
-      "type": "string",
-      "description": "The license for the project."
-    },
-    "manifest_additional": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional entries for ``MANIFEST.in``."
-    },
-    "min_coverage": {
-      "type": [
-        "string",
-        "number"
-      ],
-      "description": "The minimum permitted test coverage percentage."
-    },
-    "modname": {
-      "type": "string",
-      "description": "The name of the package."
     },
     "mypy_deps": {
       "type": "array",
@@ -245,223 +56,38 @@
       ],
       "description": "The version of ``mypy`` to use."
     },
-    "on_pypi": {
+    "on_github": {
       "type": [
         "boolean",
         "string"
       ],
-      "description": "Flag to indicate the package is available on PyPI."
-    },
-    "platforms": {
-      "type": "array",
-      "items": {
-        "enum": [
-          "Windows",
-          "macOS",
-          "Linux"
-        ]
-      },
-      "description": "A case-insensitive list of platforms to perform tests for."
+      "description": "Whether this project is on GitHub."
     },
     "pre_commit_exclude": {
       "type": "string",
       "description": "Regular expression for files that should not be checked by pre_commit."
     },
-    "preserve_custom_theme": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether custom documentation theme styling in ``_static/style.css`` and ``_templates/layout.html`` should be preserved."
-    },
-    "primary_conda_channel": {
-      "type": "string",
-      "description": "The Conda channel the package can be downloaded from."
-    },
-    "pure_python": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Flag to indicate the package is pure Python."
-    },
-    "py_modules": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of values for ``py_modules`` in ``setup.py``, which indicate the single-file modules to include in the distributions."
-    },
-    "pypi_name": {
-      "type": "string",
-      "description": "The name of project on PyPI, if different to :conf:`modname`."
-    },
-    "python_deploy_version": {
-      "type": [
-        "string",
-        "number"
-      ],
-      "description": "The version of Python to use on Travis when deploying to PyPI, Anaconda and GitHub releases."
-    },
-    "python_versions": {
-      "type": [
-        "array",
-        "object"
-      ],
-      "description": "A list of the version(s) of Python to use when performing tests with Tox, e.g."
-    },
     "repo_name": {
       "type": "string",
-      "description": "The name of GitHub repository, if different to :conf:`modname`."
+      "description": "The name of GitHub repository."
     },
-    "requires_python": {
-      "type": [
-        "string",
-        "number"
-      ],
-      "description": "The minimum required version of Python."
-    },
-    "rtfd_author": {
-      "type": "string",
-      "description": "The name of the author to show on ReadTheDocs, if different."
-    },
-    "setup_pre": {
+    "source_files": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "A list of additional python lines to insert at the beginnning of ``setup.py``."
-    },
-    "short_desc": {
-      "type": "string",
-      "description": "A short description of the project. Used by PyPI."
-    },
-    "source_dir": {
-      "type": "string",
-      "description": "The directory containing the source code of the project."
-    },
-    "sphinx_conf_epilogue": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Like :conf:`sphinx_conf_preamble`, but the lines are inserted at the end of the file."
-    },
-    "sphinx_conf_preamble": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of lines of Python code to add to the top of ``conf.py``."
-    },
-    "sphinx_html_theme": {
-      "enum": [
-        "sphinx_rtd_theme",
-        "sphinx-rtd-theme",
-        "alabaster",
-        "repo_helper_sphinx_theme",
-        "repo-helper-sphinx-theme",
-        "domdf_sphinx_theme",
-        "domdf-sphinx-theme",
-        "furo"
-      ],
-      "description": "The HTML theme to use for Sphinx."
-    },
-    "standalone_contrib_guide": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether the contributing guide for the documentation should be a standlone page."
-    },
-    "stubs_package": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Flag to indicate the package is a PEP 561 stubs package."
-    },
-    "tests_dir": {
-      "type": "string",
-      "description": "The directory containing tests, relative to the repository root."
-    },
-    "third_party_version_matrix": {
-      "type": "object",
-      "description": "A mapping of third party library names to the version number(s) to test."
-    },
-    "tox_build_requirements": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional Python build requirements for Tox."
-    },
-    "tox_requirements": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional Python requirements for Tox."
-    },
-    "tox_testenv_extras": {
-      "type": "string",
-      "description": "The \"Extra\" requirement to install when installing the package in the Tox testenv."
+      "description": "List of source files belonging to the project, relative to the project root."
     },
     "tox_unmanaged": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "A list of section names in ``tox.ini`` which should not be managed by ``repo-helper``."
-    },
-    "travis_additional_requirements": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "A list of additional Python requirements for Travis."
-    },
-    "travis_extra_install_post": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional steps to run in Travis after installing dependencies."
-    },
-    "travis_extra_install_pre": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Additional steps to run in Travis before installing dependencies."
-    },
-    "travis_ubuntu_version": {
-      "enum": [
-        "focal",
-        "bionic",
-        "xenial",
-        "trusty",
-        "precise"
-      ],
-      "description": "The Travis Ubuntu version."
-    },
-    "use_whey": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether to use `whey <https://whey.readthedocs.io/en/latest/>`_ to build distributions, rather than ``setuptools.build_meta``."
+      "description": "A list of section names in ``tox.ini`` which should not be managed by ``project-helper``."
     },
     "username": {
       "type": "string",
       "description": "The username of the GitHub account hosting the repository."
-    },
-    "version": {
-      "type": [
-        "string",
-        "number"
-      ],
-      "description": "The version of the package."
     },
     "yapf_exclude": {
       "type": "array",
@@ -473,13 +99,7 @@
   },
   "required": [
     "author",
-    "copyright_years",
-    "email",
-    "license",
-    "modname",
-    "short_desc",
-    "username",
-    "version"
+    "email"
   ],
   "additionalProperties": false
 }

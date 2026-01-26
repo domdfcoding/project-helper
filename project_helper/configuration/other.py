@@ -6,6 +6,7 @@ r"""
 """
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
@@ -26,8 +27,7 @@ r"""
 #
 
 # stdlib
-import re
-from typing import Any, Dict, List, Optional
+from typing import List
 
 # 3rd party
 from configconfig.configvar import ConfigVar
@@ -36,6 +36,7 @@ __all__ = [
 		"additional_ignore",
 		"imgbot_ignore",
 		"exclude_files",
+		"on_github",
 		]
 
 
@@ -53,6 +54,7 @@ class additional_ignore(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
+	category: str = "other"
 
 
 class imgbot_ignore(ConfigVar):  # noqa
@@ -69,6 +71,7 @@ class imgbot_ignore(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
+	category: str = "other"
 
 
 class exclude_files(ConfigVar):  # noqa
@@ -78,3 +81,14 @@ class exclude_files(ConfigVar):  # noqa
 
 	dtype = List[str]
 	default: List[str] = []
+	category: str = "other"
+
+
+class on_github(ConfigVar):  # noqa
+	"""
+	Whether this project is on GitHub.
+	"""
+
+	dtype = bool
+	default = False
+	category: str = "other"
