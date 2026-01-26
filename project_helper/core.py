@@ -35,6 +35,7 @@ import jinja2
 from domdf_python_tools.import_tools import discover
 from domdf_python_tools.paths import PathPlus, traverse_to_file
 from domdf_python_tools.typing import PathLike
+from repo_helper.templates import Environment
 from repo_helper.utils import brace, discover_entry_points
 
 # this package
@@ -42,7 +43,7 @@ import project_helper.files
 from project_helper.configuration import parse_yaml
 from project_helper.files import Management, is_registered, management
 from project_helper.files.qa import make_formate_toml
-from project_helper.templates import Environment, template_dir
+from project_helper.templates import template_dir
 
 __all__ = [
 		"ProjectHelper",
@@ -80,7 +81,7 @@ class ProjectHelper:
 	def __init__(
 			self,
 			target_repo: PathLike,
-			managed_message="This file is managed by 'project_helper'. Don't edit it directly."
+			managed_message: str = "This file is managed by 'project_helper'. Don't edit it directly.",
 			):
 		import_registered_functions()
 

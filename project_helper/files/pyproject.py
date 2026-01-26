@@ -34,10 +34,10 @@ from typing import Any, List
 import dom_toml
 from domdf_python_tools.paths import PathPlus
 from repo_helper.files.packaging import DefaultDict
+from repo_helper.templates import Environment
 
 # this package
 from project_helper.files import management
-from project_helper.templates import Environment
 
 __all__ = ["make_pyproject"]
 

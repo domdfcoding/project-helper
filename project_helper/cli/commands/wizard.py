@@ -35,14 +35,11 @@ from typing import Any, Dict
 import click
 from domdf_python_tools.paths import PathPlus
 from dulwich.errors import NotGitRepository
+from repo_helper.utils import _round_trip_dump, easter_egg, get_license_text, license_lookup, stage_changes
 from southwark.repo import Repo
-from repo_helper.utils import _round_trip_dump, easter_egg, license_lookup, stage_changes
-from repo_helper.utils import get_license_text
 
 # this package
 from project_helper.cli import cli_command
-
-
 
 __all__ = ["wizard"]
 
@@ -74,7 +71,7 @@ def wizard() -> None:
 
 	# ---------- file exists warning ----------
 	if config_file.is_file():
-		click.echo(f"\nWoah! A 'project_helper.yml' file already exists. It will be overwritten if you continue!")
+		click.echo("\nWoah! A 'project_helper.yml' file already exists. It will be overwritten if you continue!")
 		if not confirm("Are you sure you want to continue?"):
 			raise click.Abort()
 
@@ -126,7 +123,7 @@ def wizard() -> None:
 	click.echo(
 			"""
 The SPDX identifier for the license this library is distributed under.
-Not all SPDX identifiers are supported."""
+Not all SPDX identifiers are supported.""",
 			)
 
 	while True:
@@ -199,7 +196,7 @@ The options you provided have been written to the file {config_file}.
 You can configure additional options in that file.
 
 project_helper can now be run with the 'project_helper' command in the project root.
-"""
+""",
 			)
 
 	with suppress(NotGitRepository):

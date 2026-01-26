@@ -28,19 +28,20 @@ Configuration for testing and code formatting tools.
 
 # stdlib
 import pathlib
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 # 3rd party
 import dom_toml
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import DelimitedList
 from repo_helper.configupdater2 import ConfigUpdater
+from repo_helper.templates import Environment
 from repo_helper.utils import IniConfigurator, indent_join
 from shippinglabel import normalize
 
 # this package
 from project_helper.files import management
-from project_helper.templates import Environment, template_dir
+from project_helper.templates import template_dir
 
 __all__ = [
 		"make_tox",
@@ -111,7 +112,7 @@ class ToxConfig(IniConfigurator):
 		if (self.base_path / "stubs.txt").is_file():
 			mypy_deps.append("-r{toxinidir}/stubs.txt")
 
-		mypy_deps.extend(self._globals["mypy_deps"])
+		mypy_deps.extend(self["mypy_deps"])
 
 		return mypy_deps
 
@@ -122,21 +123,21 @@ class ToxConfig(IniConfigurator):
 
 		return [f"mypy {' '.join(self['source_files'])} {{posargs}}"]
 
-	def tox(self):
+	def tox(self) -> None:
 		"""
 		``[tox]``.
 		"""
 
 		self._ini["tox"]["envlist"] = ["lint", "mypy"]
 
-	def envlists(self):
+	def envlists(self) -> None:
 		"""
 		``[envlists]``.
 		"""
 
 		self._ini["envlists"]["qa"] = ["mypy", "lint"]
 
-	def testenv(self):
+	def testenv(self) -> None:
 		"""
 		``[testenv]``.
 		"""
@@ -148,7 +149,7 @@ class ToxConfig(IniConfigurator):
 				"python -m importcheck {posargs}",
 				])
 
-	def testenv_lint(self):
+	def testenv_lint(self) -> None:
 		"""
 		``[testenv:lint]``.
 		"""
@@ -177,12 +178,12 @@ class ToxConfig(IniConfigurator):
 				"git+https://github.com/python-formate/flake8-unused-arguments.git@magic-methods",
 				"pydocstyle>=6.0.0",
 				"pygments>=2.7.1",
-				"importlib_metadata<4.5.0; python_version<'3.8'"
+				"importlib_metadata<4.5.0; python_version<'3.8'",
 				])
 		cmd = f"python3 -m flake8_prettycount {' '.join(self['source_files'])} {{posargs}}"
 		self._ini["testenv:lint"]["commands"] = cmd
 
-	def testenv_mypy(self):
+	def testenv_mypy(self) -> None:
 		"""
 		``[testenv:mypy]``.
 		"""
@@ -194,7 +195,7 @@ class ToxConfig(IniConfigurator):
 		self._ini["testenv:mypy"]["deps"] = indent_join(self.get_mypy_dependencies())
 		self._ini["testenv:mypy"]["commands"] = indent_join(self.get_mypy_commands())
 
-	def flake8(self):
+	def flake8(self) -> None:
 		"""
 		``[flake8]``.
 		"""
@@ -217,7 +218,7 @@ class ToxConfig(IniConfigurator):
 		self._ini["flake8"]["unused-arguments-ignore-magic-methods"] = True
 		self._ini["flake8"]["unused-arguments-ignore-variadic-names"] = True
 
-	def merge_existing(self, ini_file):
+	def merge_existing(self, ini_file: pathlib.Path) -> None:
 		"""
 		Merge existing sections in the configuration file into the new configuration.
 
@@ -440,7 +441,7 @@ def get_isort_config(project: pathlib.Path, templates: Environment) -> Dict[str,
 			"gamepadshift",
 			"binascii",
 			"errno",
-			"ulab"
+			"ulab",
 			]
 
 	return isort

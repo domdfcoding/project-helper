@@ -34,9 +34,7 @@ from typing import Any, Callable, List, Optional, Sequence, Tuple
 # 3rd party
 import jinja2
 from domdf_python_tools.bases import UserList
-
-# this package
-from project_helper.templates import Environment
+from repo_helper.templates import Environment
 
 jinja2.Environment.__module__ = "jinja2"
 
@@ -46,7 +44,7 @@ __all__ = ["Management", "management", "is_registered", "Manager"]
 Manager = Callable[[pathlib.Path, Environment], List[str]]
 
 
-class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
+class Management(UserList[Tuple[Manager, str, Sequence[str]]]):  # noqa: PRM002
 	"""
 	Class to store functions that manage files.
 
@@ -65,7 +63,7 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 			exclude_name: str,
 			exclude_unless_true: Sequence[str] = (),
 			*,
-			name: Optional[str] = None
+			name: Optional[str] = None,
 			) -> Callable:
 		"""
 		Decorator to register a function.
@@ -93,9 +91,8 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 			signature = inspect.signature(function)
 
 			if list(signature.parameters.keys()) != ["project", "templates"]:
-				raise SyntaxError(
-						"The decorated function must take only the following arguments: 'project' and 'templates'"
-						)
+				msg = "The decorated function must take only the following arguments: 'project' and 'templates'"
+				raise SyntaxError(msg)
 
 			self.append((function, exclude_name, exclude_unless_true))
 

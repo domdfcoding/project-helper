@@ -38,10 +38,10 @@ import ruamel.yaml
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
 from repo_helper.files.pre_commit import Repo, make_github_url, yaml_safe_loader
+from repo_helper.templates import Environment
 
 # this package
 from project_helper.files import management
-from project_helper.templates import Environment
 
 __all__ = ["make_pre_commit"]
 
@@ -65,7 +65,7 @@ pre_commit_hooks = Repo(
 				"trailing-whitespace",
 				"mixed-line-ending",
 				"end-of-file-fixer",
-				]
+				],
 		)
 
 pygrep_hooks = Repo(
@@ -127,7 +127,7 @@ def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 							"id": "check-docstring-first",
 							},
 					"bind-requirements",
-					]
+					],
 			)
 
 	yapf_exclude = templates.globals["yapf_exclude"]

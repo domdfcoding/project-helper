@@ -26,9 +26,6 @@ Entry point for running ``project_helper`` from the command line.
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-# stdlib
-import sys
-
 # 3rd party
 from consolekit.utils import import_commands
 
@@ -42,9 +39,9 @@ __all__ = ["main"]
 import_commands(project_helper.cli.commands, entry_point="project_parser.command")
 
 
-def main():  # noqa: D103
-	return cli(obj={})
+def main() -> None:  # noqa: D103
+	cli(obj={})
 
 
 if __name__ == "__main__":
-	sys.exit(main())
+	main()

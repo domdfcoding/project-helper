@@ -42,11 +42,12 @@ import pytest  # nodep
 import repo_helper
 from apeye.url import URL
 from dulwich.config import StackedConfig
+from repo_helper.templates import Environment
 from repo_helper.utils import brace
 from southwark.repo import Repo
 
 # this package
-from project_helper.templates import Environment, template_dir
+from project_helper.templates import template_dir
 
 __all__ = [
 		"demo_environment",

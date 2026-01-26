@@ -5,20 +5,22 @@ from typing import List
 import pytest
 from coincidence.regressions import AdvancedFileRegressionFixture
 from domdf_python_tools.paths import PathPlus
+from repo_helper.templates import Environment
 
 # this package
 from project_helper.files.pyproject import make_pyproject
 
 
 @pytest.mark.parametrize(
-		"plugins", [
+		"plugins",
+		[
 				pytest.param(["my.mypy:plugin"], id="with"),
 				pytest.param([], id="without"),
-				]
+				],
 		)
 def test_make_pyproject(
 		tmp_pathplus: PathPlus,
-		demo_environment,
+		demo_environment: Environment,
 		advanced_file_regression: AdvancedFileRegressionFixture,
 		plugins: List[str],
 		):

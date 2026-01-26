@@ -29,7 +29,7 @@ Configuration options.
 # stdlib
 import json
 from operator import attrgetter
-from typing import Any, Dict, List
+from typing import Any, Dict, List, MutableMapping
 
 # 3rd party
 import click
@@ -57,7 +57,7 @@ from project_helper.configuration import metadata, other, qa
 __all__ = ["ProjectHelperParser", "dump_schema", "parse_yaml"]
 
 
-def parse_yaml(project: PathLike, allow_unknown_keys: bool = False) -> Dict:
+def parse_yaml(project: PathLike, allow_unknown_keys: bool = False) -> MutableMapping:
 	"""
 	Parse configuration values from ``project_helper.yml``.
 
@@ -81,7 +81,7 @@ all_values: List[ConfigVarMeta] = []
 
 for module in [metadata, other, qa]:
 
-	for item in module.__all__:  # type: ignore
+	for item in module.__all__:
 		confvar = getattr(module, item)
 		if isinstance(confvar, ConfigVarMeta):
 			all_values.append(confvar)

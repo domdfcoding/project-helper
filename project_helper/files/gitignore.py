@@ -32,10 +32,10 @@ from typing import List
 
 # 3rd party
 from domdf_python_tools.paths import PathPlus
+from repo_helper.templates import Environment
 
 # this package
 from project_helper.files import management
-from project_helper.templates import Environment
 
 __all__ = [
 		"ignores",

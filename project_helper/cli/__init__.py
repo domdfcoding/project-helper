@@ -62,7 +62,7 @@ __all__ = ["cli", "cli_command", "cli_group"]
 @click.version_option(__version__)
 @click_group(invoke_without_command=True)
 @click.pass_context
-def cli(ctx: Context):
+def cli(ctx: Context) -> None:  # noqa: PRM002
 	"""
 	Update files in the project, based on settings in 'project_helper.yml'.
 	"""

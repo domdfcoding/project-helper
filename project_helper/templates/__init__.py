@@ -26,22 +26,10 @@ Contains the :class:`pathlib.Path` object representing the templates directory (
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-# stdlib
-from typing import Any, Dict
-
 # 3rd party
-import jinja2
 from domdf_python_tools.paths import PathPlus
 
 __all__ = ["template_dir"]
 
 #: The templates directory.
 template_dir = PathPlus(__file__).parent.absolute()
-
-
-class Environment(jinja2.Environment):
-	globals: Dict[str, Any]  # noqa: A003  # pylint: disable=redefined-builtin
-
-
-Environment.__module__ = jinja2.Environment.__module__
-Environment.__qualname__ = jinja2.Environment.__qualname__

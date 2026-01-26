@@ -1,6 +1,7 @@
 # 3rd party
 from coincidence.regressions import AdvancedFileRegressionFixture
 from domdf_python_tools.paths import PathPlus
+from repo_helper.templates import Environment
 
 # this package
 from project_helper.files.pre_commit import make_pre_commit
@@ -8,7 +9,7 @@ from project_helper.files.pre_commit import make_pre_commit
 
 def test_make_pre_commit(
 		tmp_pathplus: PathPlus,
-		demo_environment,
+		demo_environment: Environment,
 		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 
