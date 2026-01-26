@@ -35,9 +35,9 @@ import dom_toml
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import DelimitedList
 from repo_helper.configupdater2 import ConfigUpdater
-from repo_helper.linting import code_only_warning, lint_warn_list
+from repo_helper.files.linting import code_only_warning, lint_warn_list
+from repo_helper.files.testing import standard_flake8_excludes
 from repo_helper.templates import Environment
-from repo_helper.testing import standard_flake8_excludes
 from repo_helper.utils import IniConfigurator, indent_join
 from shippinglabel import normalize
 
@@ -54,7 +54,6 @@ __all__ = [
 		"make_pylintrc",
 		"code_only_warning",
 		]
-
 
 
 class ToxConfig(IniConfigurator):
@@ -445,11 +444,6 @@ def get_isort_config(project: pathlib.Path, templates: Environment) -> Dict[str,
 			]
 
 	return isort
-
-
-
-
-
 
 
 @management.register("pylintrc")

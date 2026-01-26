@@ -64,7 +64,6 @@ def make_pyproject(project: pathlib.Path, templates: Environment) -> List[str]:
 	data.set_default("tool", {})
 
 	# TODO
-	# if not templates.globals["enable_tests"] and not templates.globals["stubs_package"]:
 	# 	data["tool"]["importcheck"] = data["tool"].get("importcheck", {})
 
 	# [tool.mypy]
