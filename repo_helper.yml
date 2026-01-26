@@ -60,3 +60,4 @@ yapf_exclude:
 
 keywords:
  - configuration
+ - circuitpython
