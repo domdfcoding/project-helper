@@ -44,8 +44,8 @@ project-helper
 	:target: https://github.com/domdfcoding/project-helper/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/project-helper/badge.svg
-	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/project-helper/
+.. |requires| image:: https://dependency-dash.repo-helper.uk/github/domdfcoding/project-helper/badge.svg
+	:target: https://dependency-dash.repo-helper.uk/github/domdfcoding/project-helper/
 	:alt: Requirements Status
 
 .. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/project-helper/master?logo=coveralls
@@ -71,7 +71,7 @@ project-helper
 	:target: https://github.com/domdfcoding/project-helper/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2026
 	:alt: Maintenance
 
 .. end shields
