@@ -34,11 +34,11 @@ from textwrap import indent
 from typing import List
 
 # 3rd party
-import ruamel.yaml
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
-from repo_helper.files.pre_commit import Repo, make_github_url, yaml_safe_loader
+from repo_helper.files.pre_commit import Repo, domdfcoding_hooks, formate, make_github_url, yaml_safe_loader
 from repo_helper.templates import Environment
+from ruamel.yaml import YAML
 
 # this package
 from project_helper.files import management
@@ -118,37 +118,29 @@ def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 	:param templates:
 	"""
 
-	domdfcoding_hooks = Repo(
-			repo=make_github_url("domdfcoding", "pre-commit-hooks"),
-			rev="v0.2.1",
-			hooks=[
-					{"id": "requirements-txt-sorter", "args": ["--allow-git"]},
-					{
-							"id": "check-docstring-first",
-							},
-					"bind-requirements",
-					],
-			)
-
 	yapf_exclude = templates.globals["yapf_exclude"]
 	if yapf_exclude:
-		formate_excludes = fr"^({'|'.join(yapf_exclude)})\.(_)?py$"
-		formate_hooks = [{"id": "formate", "exclude": formate_excludes}]
+		formate_custom = formate.replace_hooks(
+				hooks=[{
+						"id": "formate",
+						"exclude": fr"^({'|'.join(yapf_exclude)})\.(_)?py$",
+						"additional_dependencies": ["formate-trailing-commas>=0.1.1"],
+						}],
+				)
 	else:
-		formate_hooks = ["formate"]
-
-	formate = Repo(
-			repo=make_github_url("python-formate", "formate"),
-			rev="v0.4.9",
-			hooks=formate_hooks,
-			)
+		formate_custom = formate.replace_hooks(
+				hooks=[{
+						"id": "formate",
+						"additional_dependencies": ["formate-trailing-commas>=0.1.1"],
+						}],
+				)
 
 	pre_commit_file = PathPlus(project / ".pre-commit-config.yaml")
 
 	if not pre_commit_file.is_file():
 		pre_commit_file.touch()
 
-	dumper = ruamel.yaml.YAML()
+	dumper = YAML()
 	dumper.indent(mapping=2, sequence=3, offset=1)
 
 	output = StringList([
@@ -156,6 +148,9 @@ def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 			"---",
 			'',
 			f"exclude: {templates.globals['pre_commit_exclude']}",
+			'',
+			"ci:",
+			"  autoupdate_schedule: quarterly",
 			'',
 			"repos:",
 			])
@@ -168,7 +163,7 @@ def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 			flake2lint,
 			pygrep_hooks,
 			lucas_c_hooks,
-			formate,
+			formate_custom,
 			]
 
 	managed_hooks_urls = [str(hook.repo) for hook in managed_hooks]
