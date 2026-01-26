@@ -3,6 +3,9 @@
 
 exclude: ^$
 
+ci:
+  autoupdate_schedule: quarterly
+
 repos:
  - repo: https://github.com/pre-commit/pre-commit-hooks
    rev: v3.4.0
@@ -25,21 +28,22 @@ repos:
     - id: end-of-file-fixer
 
  - repo: https://github.com/domdfcoding/pre-commit-hooks
-   rev: v0.2.1
+   rev: v0.4.0
    hooks:
     - id: requirements-txt-sorter
       args:
        - --allow-git
     - id: check-docstring-first
+      exclude: ^(doc-source/conf|__pkginfo__|setup|tests/.*)\.py$
     - id: bind-requirements
 
  - repo: https://github.com/domdfcoding/flake2lint
-   rev: v0.4.1
+   rev: v0.4.3
    hooks:
     - id: flake2lint
 
  - repo: https://github.com/pre-commit/pygrep-hooks
-   rev: v1.9.0
+   rev: v1.10.0
    hooks:
     - id: python-no-eval
     - id: rst-backticks
@@ -47,15 +51,16 @@ repos:
     - id: rst-inline-touching-normal
 
  - repo: https://github.com/Lucas-C/pre-commit-hooks
-   rev: v1.1.10
+   rev: v1.5.1
    hooks:
     - id: remove-crlf
     - id: forbid-crlf
 
  - repo: https://github.com/python-formate/formate
-   rev: v0.4.9
+   rev: v0.8.0
    hooks:
     - id: formate
-      exclude: ^()\.(_)?py$
+      additional_dependencies:
+       - formate-trailing-commas>=0.1.1
 
 # Custom hooks can be added below this comment
