@@ -14,7 +14,6 @@ enable_docs: false
 on_pypi: false
 use_whey: true
 
-python_deploy_version: 3.8
 #min_coverage: 85
 pre_commit_exclude: "^project_helper/templates/.*\\.(_py|yml)$"
 
