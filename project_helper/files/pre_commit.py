@@ -36,7 +36,16 @@ from typing import List
 # 3rd party
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
-from repo_helper.files.pre_commit import Repo, domdfcoding_hooks, formate, make_github_url, yaml_safe_loader
+from repo_helper.files.pre_commit import (
+		Repo,
+		domdfcoding_hooks,
+		flake2lint,
+		formate,
+		lucas_c_hooks,
+		pre_commit_hooks,
+		pygrep_hooks,
+		yaml_safe_loader
+		)
 from repo_helper.templates import Environment
 from ruamel.yaml import YAML
 
@@ -44,52 +53,6 @@ from ruamel.yaml import YAML
 from project_helper.files import management
 
 __all__ = ["make_pre_commit"]
-
-pre_commit_hooks = Repo(
-		repo=make_github_url("pre-commit", "pre-commit-hooks"),
-		rev="v3.4.0",
-		hooks=[
-				"check-added-large-files",
-				"check-ast",
-				"fix-byte-order-marker",
-				"check-byte-order-marker",
-				"check-case-conflict",
-				"check-executables-have-shebangs",
-				"check-json",
-				"check-toml",
-				"check-yaml",
-				"check-merge-conflict",
-				"check-symlinks",
-				"check-vcs-permalinks",
-				"detect-private-key",
-				"trailing-whitespace",
-				"mixed-line-ending",
-				"end-of-file-fixer",
-				],
-		)
-
-pygrep_hooks = Repo(
-		repo=make_github_url("pre-commit", "pygrep-hooks"),
-		rev="v1.9.0",
-		hooks=[
-				"python-no-eval",
-				"rst-backticks",
-				"rst-directive-colons",
-				"rst-inline-touching-normal",  # TODO: "python-check-blanket-type-ignore",
-				],
-		)
-
-lucas_c_hooks = Repo(
-		repo=make_github_url("Lucas-C", "pre-commit-hooks"),
-		rev="v1.1.10",
-		hooks=["remove-crlf", "forbid-crlf"],
-		)
-
-flake2lint = Repo(
-		repo=make_github_url("domdfcoding", "flake2lint"),
-		rev="v0.4.1",
-		hooks=["flake2lint"],
-		)
 
 # shellcheck = Repo(
 # 		repo=make_github_url("shellcheck-py", "shellcheck-py"),
