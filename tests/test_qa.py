@@ -11,7 +11,9 @@ from project_helper.files.qa import make_formate_toml, make_pylintrc, make_tox, 
 
 
 def test_make_formate_toml_case_1(
-		tmp_pathplus: PathPlus, demo_environment, advanced_file_regression: AdvancedFileRegressionFixture
+		tmp_pathplus: PathPlus,
+		demo_environment,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	(tmp_pathplus / "tests").mkdir()
 	(tmp_pathplus / "tests" / "requirements.txt").write_text('')
@@ -30,7 +32,9 @@ def test_make_formate_toml_case_1(
 
 
 def test_make_formate_toml_case_2(
-		tmp_pathplus: PathPlus, demo_environment, advanced_file_regression: AdvancedFileRegressionFixture
+		tmp_pathplus: PathPlus,
+		demo_environment,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	(tmp_pathplus / "tests").mkdir()
 	(tmp_pathplus / "tests" / "requirements.txt").write_text('')
@@ -51,7 +55,9 @@ def test_make_formate_toml_case_2(
 
 
 def test_make_formate_toml_case_3(
-		tmp_pathplus: PathPlus, demo_environment, advanced_file_regression: AdvancedFileRegressionFixture
+		tmp_pathplus: PathPlus,
+		demo_environment,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	(tmp_pathplus / "tests").mkdir()
 	(tmp_pathplus / "tests" / "requirements.txt").write_text('')
@@ -65,7 +71,8 @@ def test_make_formate_toml_case_3(
 			])
 
 	(tmp_pathplus / "formate.toml").write_lines([
-			"[hooks.isort.kwargs]", 'known_third_party = ["awesome_package"]'
+			"[hooks.isort.kwargs]",
+			'known_third_party = ["awesome_package"]',
 			])
 
 	managed_files = make_formate_toml(tmp_pathplus, demo_environment)
@@ -74,7 +81,9 @@ def test_make_formate_toml_case_3(
 
 
 def test_pylintrc(
-		tmp_pathplus: PathPlus, demo_environment, advanced_file_regression: AdvancedFileRegressionFixture
+		tmp_pathplus: PathPlus,
+		demo_environment,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	managed_files = make_pylintrc(tmp_pathplus, demo_environment)
 	assert managed_files == [".pylintrc"]
@@ -82,7 +91,9 @@ def test_pylintrc(
 
 
 def test_make_yapf(
-		tmp_pathplus: PathPlus, demo_environment, advanced_file_regression: AdvancedFileRegressionFixture
+		tmp_pathplus: PathPlus,
+		demo_environment,
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	managed_files = make_yapf(tmp_pathplus, demo_environment)
 	assert managed_files == [".style.yapf"]

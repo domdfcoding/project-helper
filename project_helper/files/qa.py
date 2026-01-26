@@ -177,7 +177,7 @@ class ToxConfig(IniConfigurator):
 				"git+https://github.com/python-formate/flake8-unused-arguments.git@magic-methods",
 				"pydocstyle>=6.0.0",
 				"pygments>=2.7.1",
-				"importlib_metadata<4.5.0; python_version<'3.8'"
+				"importlib_metadata<4.5.0; python_version<'3.8'",
 				])
 		cmd = f"python3 -m flake8_prettycount {' '.join(self['source_files'])} {{posargs}}"
 		self._ini["testenv:lint"]["commands"] = cmd
@@ -440,7 +440,7 @@ def get_isort_config(project: pathlib.Path, templates: Environment) -> Dict[str,
 			"gamepadshift",
 			"binascii",
 			"errno",
-			"ulab"
+			"ulab",
 			]
 
 	return isort

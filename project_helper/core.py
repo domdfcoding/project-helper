@@ -80,7 +80,7 @@ class ProjectHelper:
 	def __init__(
 			self,
 			target_repo: PathLike,
-			managed_message="This file is managed by 'project_helper'. Don't edit it directly."
+			managed_message="This file is managed by 'project_helper'. Don't edit it directly.",
 			):
 		import_registered_functions()
 

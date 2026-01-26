@@ -11,10 +11,11 @@ from project_helper.files.pyproject import make_pyproject
 
 
 @pytest.mark.parametrize(
-		"plugins", [
+		"plugins",
+		[
 				pytest.param(["my.mypy:plugin"], id="with"),
 				pytest.param([], id="without"),
-				]
+				],
 		)
 def test_make_pyproject(
 		tmp_pathplus: PathPlus,

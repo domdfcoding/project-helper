@@ -65,7 +65,7 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 			exclude_name: str,
 			exclude_unless_true: Sequence[str] = (),
 			*,
-			name: Optional[str] = None
+			name: Optional[str] = None,
 			) -> Callable:
 		"""
 		Decorator to register a function.
@@ -94,7 +94,7 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):
 
 			if list(signature.parameters.keys()) != ["project", "templates"]:
 				raise SyntaxError(
-						"The decorated function must take only the following arguments: 'project' and 'templates'"
+						"The decorated function must take only the following arguments: 'project' and 'templates'",
 						)
 
 			self.append((function, exclude_name, exclude_unless_true))

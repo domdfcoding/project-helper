@@ -65,7 +65,7 @@ pre_commit_hooks = Repo(
 				"trailing-whitespace",
 				"mixed-line-ending",
 				"end-of-file-fixer",
-				]
+				],
 		)
 
 pygrep_hooks = Repo(
@@ -127,7 +127,7 @@ def make_pre_commit(project: pathlib.Path, templates: Environment) -> List[str]:
 							"id": "check-docstring-first",
 							},
 					"bind-requirements",
-					]
+					],
 			)
 
 	yapf_exclude = templates.globals["yapf_exclude"]
