@@ -73,9 +73,9 @@ class Management(UserList[Tuple[Manager, str, Sequence[str]]]):  # noqa: PRM002
 		.. code-block:: python
 
 			def function(
-				project: pathlib.Path,
-				templates: jinja2.Environment,
-				) -> List[str]: ...
+					project: pathlib.Path,
+					templates: jinja2.Environment,
+					) -> List[str]: ...
 
 		:param exclude_name: A string to use in 'exclude_files' to disable this function.
 		:param exclude_unless_true: A list of strings representing config values that must be true to call the function.
