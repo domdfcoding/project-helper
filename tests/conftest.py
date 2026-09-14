@@ -20,24 +20,24 @@ def demo_environment() -> Environment:
 	.. code-block:: python
 
 		{
-			"author": "Bob & Alice",
-			"email": "bob@example.com",
-			"username": "octocat",
-			"repo_name": "circuitpython_hello_world",
-			"assignee": "octocat",
-			"source_files": ["code.py", "boot.py", "secrets.py"],
-			"additional_ignore": ["foo", "bar", "fuzz"],
-			"imgbot_ignore": ["**/*.svg"],
-			"exclude_files": [],
-			"on_github": True,
-			"mypy_deps": [],
-			"mypy_plugins": [],
-			"mypy_version": "0.910",
-			"tox_unmanaged": [],
-			"yapf_exclude": [],
-			"pre_commit_exclude": "xenial",
-			"managed_message": "This file is managed by 'project_helper'. Don't edit it directly."
-			}
+				"author": "Bob & Alice",
+				"email": "bob@example.com",
+				"username": "octocat",
+				"repo_name": "circuitpython_hello_world",
+				"assignee": "octocat",
+				"source_files": ["code.py", "boot.py", "secrets.py"],
+				"additional_ignore": ["foo", "bar", "fuzz"],
+				"imgbot_ignore": ["**/*.svg"],
+				"exclude_files": [],
+				"on_github": True,
+				"mypy_deps": [],
+				"mypy_plugins": [],
+				"mypy_version": "0.910",
+				"tox_unmanaged": [],
+				"yapf_exclude": [],
+				"pre_commit_exclude": "xenial",
+				"managed_message": "This file is managed by 'project_helper'. Don't edit it directly.",
+				}
 
 	Additional options can be set and values changed at the start of tests as follows:
 
